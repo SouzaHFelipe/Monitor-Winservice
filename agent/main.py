@@ -39,6 +39,7 @@ def check_alerts(metrics):
             f"O Py-Monitor detectou métricas acima do limite em {metrics['timestamp']}:\n\n"
             f"{alert_text}\n\n"
             f"Por favor, verifique o servidor."
+            
         )
         
     
