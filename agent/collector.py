@@ -1,7 +1,11 @@
 import psutil
 import time
-from datetime import datetime , timezone , time
-from config import *
+from datetime import datetime, timezone
+
+try:
+    from .config import *
+except ImportError:
+    from config import *
 
 class MetricsCollector:
     

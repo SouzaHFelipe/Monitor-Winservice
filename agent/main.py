@@ -1,7 +1,11 @@
 import time
 import json
+from .collector import MetricsCollector
+from .config import LOG_FILE_PATH, COLLECT_INTERVAL, CPU_THRESHOLD
+from .notifier import send_email_alert
+import agent.config as config
 from collector import MetricsCollector
-from config import LOG_FILE_PATH , COLLECT_INTERVAL , CPU_THRESHOLD
+from config import LOG_FILE_PATH, COLLECT_INTERVAL, CPU_THRESHOLD
 from notifier import send_email_alert
 import config
 
@@ -33,7 +37,6 @@ def check_alerts(metrics):
     if alerts:
         subject = f" ALERTA DE SISTEMA: {len(alerts)} problema(s) detectado(s)"
         
-        # Junta todos os alertas da lista em um texto com quebras de linha
         alert_text = "\n".join(alerts)
         body = (
             f"O Py-Monitor detectou métricas acima do limite em {metrics['timestamp']}:\n\n"
@@ -42,7 +45,6 @@ def check_alerts(metrics):
             
         )
         
-    
     send_email_alert(
             subject=subject,
             body=body,
@@ -60,8 +62,6 @@ try:
         
         save_to_log(metrics)
 
-        
-        # Exibimos no terminal de forma organizada
         print(f"Timestamp: {metrics['timestamp']}")
         print(f"CPU      : {metrics['cpu_percent']}%")
         print(f"RAM      : {metrics['memory_percent']}%")

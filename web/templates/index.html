@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Py-Monitor | Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
+
+    <!-- Header / Navbar -->
+    <nav class="border-b border-slate-800 bg-slate-950/50 backdrop-blur px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <i data-lucide="activity" class="text-emerald-400 w-6 h-6"></i>
+            <h1 class="text-xl font-bold tracking-wide">Py-Monitor <span class="text-xs font-normal px-2 py-0.5 rounded bg-slate-800 text-slate-400">Winservi</span></h1>
+        </div>
+        <div class="flex items-center gap-2 text-sm text-slate-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Status: Agente Ativo
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        
+        <!-- Cards de Métricas Atuais -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            
+            <!-- CPU Card -->
+            <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-6 shadow-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-slate-400 font-medium">Uso de CPU</span>
+                    <i data-lucide="cpu" class="text-blue-400 w-5 h-5"></i>
+                </div>
+                <div class="flex items-baseline justify-between">
+                    <span id="cpu-value" class="text-4xl font-extrabold text-slate-100">0.0%</span>
+                    <span class="text-xs text-slate-400">Limite: 80%</span>
+                </div>
+            </div>
+
+            <!-- RAM Card -->
+            <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-6 shadow-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-slate-400 font-medium">Memória RAM</span>
+                    <i data-lucide="memory-stick" class="text-purple-400 w-5 h-5"></i>
+                </div>
+                <div class="flex items-baseline justify-between">
+                    <span id="ram-value" class="text-4xl font-extrabold text-slate-100">0.0%</span>
+                    <span class="text-xs text-slate-400">Limite: 85%</span>
+                </div>
+            </div>
+
+            <!-- DISK Card -->
+            <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-6 shadow-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-slate-400 font-medium">Uso do Disco</span>
+                    <i data-lucide="hard-drive" class="text-amber-400 w-5 h-5"></i>
+                </div>
+                <div class="flex items-baseline justify-between">
+                    <span id="disk-value" class="text-4xl font-extrabold text-slate-100">0.0%</span>
+                    <span class="text-xs text-slate-400">Limite: 90%</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Área do Gráfico -->
+        <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-6 shadow-lg">
+            <h2 class="text-lg font-semibold mb-4 text-slate-200">Histórico de Consumo em Tempo Real</h2>
+            <div class="h-80 w-full">
+                <canvas id="metricsChart"></canvas>
+            </div>
+        </div>
+
+
+    </main>
+    <!-- Importa o arquivo JS externo via Flask -->
+        <script src="{{ url_for('static', filename='main.js') }}"></script>
+    </body>
+</html>
