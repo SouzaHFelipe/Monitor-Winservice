@@ -1,9 +1,15 @@
 import subprocess
+import sys
 
-agent = subprocess.Popen(["python", "agent/main.py"])
-web = subprocess.Popen(["python", "web/app.py"])
-remote = subprocess.Popen(["python" ,"agent/remote_agent.py"])
 
-agent.wait()
-web.wait()
-remote.wait()
+processes = [
+	subprocess.Popen([sys.executable, "-m", "agent.main"]),
+	subprocess.Popen([sys.executable, "-m", "web.app"]),
+]
+
+try:
+	for process in processes:
+		process.wait()
+except KeyboardInterrupt:
+	for process in processes:
+		process.terminate()

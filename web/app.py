@@ -3,9 +3,10 @@ import json
 import os
 from agent.collector import MetricsCollector
 
-collector_web = MetricsCollector()
 
 app = Flask(__name__)
+
+collector_web = MetricsCollector()
 
 # Descobre o caminho absoluto para a pasta do projeto
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

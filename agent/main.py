@@ -1,14 +1,13 @@
 import time
 import json
 import os
-from collector import MetricsCollector
-from config import LOG_FILE_PATH, COLLECT_INTERVAL, CPU_THRESHOLD
-from notifier import send_email_alert
-import config
+from agent.collector import MetricsCollector
+from agent.notifier import send_email_alert
+from agent import config
 
 collector = MetricsCollector()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOG_FILE = LOG_FILE_PATH
+LOG_FILE = config.LOG_FILE_PATH
 
 print("=== Py-Monitor Agent Iniciado ===")
 print("Pressione Ctrl+C para encerrar no terminal.\n")
@@ -27,10 +26,10 @@ def check_alerts(metrics):
         
          
     if metrics['disk_percent'] > config.DISK_THRESHOLD:
-       alerts.append(f"- RAM em {metrics['memory_percent']}% (Limite: {config.RAM_THRESHOLD}%)")
+        alerts.append(f"- DISCO em {metrics['disk_percent']}% (Limite: {config.DISK_THRESHOLD}%)")
        
     if metrics['memory_percent'] > config.RAM_THRESHOLD:
-        alerts.append(f"- DISCO em {metrics['disk_percent']}% (Limite: {config.DISK_THRESHOLD}%)")
+        alerts.append(f"- RAM em {metrics['memory_percent']}% (Limite: {config.RAM_THRESHOLD}%)")
 
     if alerts:
         subject = f" ALERTA DE SISTEMA: {len(alerts)} problema(s) detectado(s)"
@@ -43,7 +42,7 @@ def check_alerts(metrics):
             
         )
         
-    send_email_alert(
+        send_email_alert(
             subject=subject,
             body=body,
             sender=config.EMAIL_SENDER,

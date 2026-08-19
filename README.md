@@ -175,7 +175,7 @@ Exemplo de dados coletados:
 Em outro terminal:
 
 ```bash
-python web/app.py
+python -m web.app
 ```
 
 A aplicação será iniciada na porta:

@@ -1,7 +1,7 @@
 import psutil
 import time
 from datetime import datetime, timezone
-from config import *
+from agent.config import *
 
 class MetricsCollector:
     
@@ -35,8 +35,8 @@ class MetricsCollector:
             "disk_percent": self.get_disk(),
             "network": self.get_network()
         }
-        
-def get_running_processes(self):
+
+    def get_running_processes(self):
         """Retorna uma lista com os processos que mais consomem CPU/Memória."""
         processes = []
         for proc in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_percent']):
