@@ -1,13 +1,10 @@
 import time
 import json
-from .collector import MetricsCollector
-from .config import LOG_FILE_PATH, COLLECT_INTERVAL, CPU_THRESHOLD
-from .notifier import send_email_alert
-import agent.config as config
 from collector import MetricsCollector
 from config import LOG_FILE_PATH, COLLECT_INTERVAL, CPU_THRESHOLD
 from notifier import send_email_alert
-import config
+import config as config
+
 
 collector = MetricsCollector()
 LOG_FILE = LOG_FILE_PATH
