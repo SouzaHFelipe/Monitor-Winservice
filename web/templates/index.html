@@ -77,6 +77,25 @@
             </div>
         </div>
 
+        <div class="card mt-4">
+            <div class="card-body">
+                <h3>💻 Aplicativos em Execução (Top 10 CPU)</h3>
+                <table class="table table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>PID</th>
+                            <th>Nome do Processo</th>
+                            <th>CPU (%)</th>
+                            <th>Memória (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="process-table-body">
+                        <script src="{{ url_for('static', filename='task.js') }}"></script>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
 
     </main>
     <!-- Importa o arquivo JS externo via Flask -->

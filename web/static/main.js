@@ -1,5 +1,3 @@
-lucide.createIcons();
-
 // Configuração do Gráfico Chart.js
 const ctx = document.getElementById('metricsChart').getContext('2d');
 const chart = new Chart(ctx, {
@@ -25,6 +23,31 @@ const chart = new Chart(ctx, {
     }
 });
 
+
+function atualizarProcessos() {
+    fetch('/api/processes')
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById('process-table-body');
+            tbody.innerHTML = ''; // Limpa a tabela
+            
+            data.forEach(proc => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${proc.pid}</td>
+                    <td>${proc.name}</td>
+                    <td>${proc.cpu_percent}%</td>
+                    <td>${proc.memory_percent}%</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+}
+
+// Atualiza a cada 3 segundos
+setInterval(atualizarProcessos, 3000);
+atualizarProcessos(); // Executa logo de cara
+
 // Função para buscar dados da API Flask
 async function fetchMetrics() {
     try {
@@ -40,7 +63,8 @@ async function fetchMetrics() {
         document.getElementById('disk-value').innerText = `${latest.disk_percent}%`;
 
         // Atualiza o gráfico
-        chart.data.labels = data.map(m => m.timestamp.split(' ')[1]);
+        // Extrai um rótulo de tempo legível a partir do timestamp ISO
+        chart.data.labels = data.map(m => new Date(m.timestamp).toLocaleTimeString());
         chart.data.datasets[0].data = data.map(m => m.cpu_percent);
         chart.data.datasets[1].data = data.map(m => m.memory_percent);
         chart.data.datasets[2].data = data.map(m => m.disk_percent);
@@ -54,3 +78,4 @@ async function fetchMetrics() {
 // Atualiza a cada 3 segundos
 setInterval(fetchMetrics, 3000);
 fetchMetrics();
+lucide.createIcons();

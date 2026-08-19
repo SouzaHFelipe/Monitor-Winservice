@@ -1,12 +1,13 @@
 import time
 import json
+import os
 from collector import MetricsCollector
 from config import LOG_FILE_PATH, COLLECT_INTERVAL, CPU_THRESHOLD
 from notifier import send_email_alert
-import config as config
-
+import config
 
 collector = MetricsCollector()
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOG_FILE = LOG_FILE_PATH
 
 print("=== Py-Monitor Agent Iniciado ===")

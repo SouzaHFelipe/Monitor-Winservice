@@ -1,6 +1,9 @@
 from flask import Flask, render_template, jsonify
 import json
 import os
+from agent.collector import MetricsCollector
+
+collector_web = MetricsCollector()
 
 app = Flask(__name__)
 
@@ -33,11 +36,16 @@ def index():
 def get_metrics():
     data = read_last_metrics(limit=20)
     response = jsonify(data)
-    # Impede que o navegador guarde cache da chamada de API
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
     return response
+
+@app.route("/api/processes")
+def api_processes():
+    """Rota que retorna os processos atuais do computador."""
+    try:
+        procs = collector_web.get_running_processes()
+        return jsonify(procs), 200
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
 
 if __name__ == "__main__":
 

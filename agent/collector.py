@@ -1,11 +1,7 @@
 import psutil
 import time
 from datetime import datetime, timezone
-
-try:
-    from .config import *
-except ImportError:
-    from config import *
+from config import *
 
 class MetricsCollector:
     
@@ -39,3 +35,22 @@ class MetricsCollector:
             "disk_percent": self.get_disk(),
             "network": self.get_network()
         }
+        
+def get_running_processes(self):
+        """Retorna uma lista com os processos que mais consomem CPU/Memória."""
+        processes = []
+        for proc in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_percent']):
+            try:
+                pinfo = proc.info
+                processes.append({
+                    "pid": pinfo['pid'],
+                    "name": pinfo['name'],
+                    "cpu_percent": pinfo['cpu_percent'] or 0.0,
+                    "memory_percent": round(pinfo['memory_percent'] or 0.0, 2)
+                })
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+        
+        # Ordena pelos processos que mais gastam CPU e pega apenas os top 10
+        processes = sorted(processes, key=lambda x: x['cpu_percent'], reverse=True)
+        return processes[:10]

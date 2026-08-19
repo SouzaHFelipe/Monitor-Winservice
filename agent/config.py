@@ -3,7 +3,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE_PATH = os.path.join(BASE_DIR, "metrics.log")
 
-COLLECT_INTERVAL = 0.1
+COLLECT_INTERVAL = 60
 #LOG_FILE_PATH = "agent/metrics.log"
 DISK_PATH = "C:\\"
 
